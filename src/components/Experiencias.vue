@@ -23,17 +23,17 @@
 const experiencias = [
   {
     id: 1,
-    cargo: 'Desenvolvedor Front-end',
-    empresa: 'Empresa Exemplo 1',
-    periodo: 'Jan 2022 - Atual',
-    descricao: 'Atuei no desenvolvimento de interfaces modernas utilizando Vue.js, Tailwind e integrações com APIs.'
+    cargo: 'Desenvolvedor Júnior | Suporte Técnico manipulação de dados em banco',
+    empresa: 'Intelite Tecnologia',
+    periodo: 'Fev 2024 - Atual',
+    descricao: 'Atuo como desenvolvedor full stack com foco em aplicações web modernas, utilizando Vue.js no front-end e LoopBack no back-end. Também sou responsável por dar suporte técnico aos clientes e realizar manutenções e alterações no banco de dados. Trabalho com tecnologias como VUE, REACT, TAILWIND, HTML5, CSS3, JAVASCRIPT, APIs REST e MongoDB/SQL, conciliando desenvolvimento com atendimento técnico eficiente.'
   },
   {
     id: 2,
-    cargo: 'Estagiário de TI',
-    empresa: 'Empresa Exemplo 2',
-    periodo: 'Jul 2021 - Dez 2021',
-    descricao: 'Auxiliei na manutenção de sistemas internos, suporte técnico e automação de tarefas.'
+    cargo: 'Suporte Técnico',
+    empresa: 'Intelite Tecnologia',
+    periodo: 'Ago 2022 - Fev 2024',
+    descricao: 'Suporte técnico de um software de autoatendimento utilizado por empresas em todo o Brasil. Sou responsável pela instalação, manutenção e otimização do sistema em dispositivos Android TV Box, além da configuração de roteadores para garantir conectividade estável e eficiente.'
   }
 ]
 </script>

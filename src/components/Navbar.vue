@@ -1,6 +1,6 @@
 <template>
   <nav class="fixed top-0 left-0 w-full z-50 bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 w-full">
       <div class="flex items-center gap-2">
         <span class="font-bold text-xl text-gray-900 dark:text-white">MeuPortfólio</span>
       </div>
