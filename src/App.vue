@@ -10,7 +10,7 @@ import Experiencias from './components/Experiencias.vue'
 </script>
 
 <template>
-  <div class="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <!-- Navbar será inserida aqui -->
     <Navbar />
     <main>
