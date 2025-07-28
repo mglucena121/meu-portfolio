@@ -14,11 +14,11 @@
       </div>
       <div class="flex items-center gap-2">
         <!-- Botões sociais -->
-        <a href="https://github.com/seu-usuario" target="_blank" rel="noopener noreferrer" 
+        <a href="https://github.com/mglucena121" target="_blank" rel="noopener noreferrer" 
            class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors group">
           <Icon icon="mdi:github" class="text-xl text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" />
         </a>
-        <a href="https://linkedin.com/in/seu-usuario" target="_blank" rel="noopener noreferrer" 
+        <a href="https://www.linkedin.com/in/m%C3%A1rio-gomes-7b59b71b9/" target="_blank" rel="noopener noreferrer" 
            class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors group">
           <Icon icon="mdi:linkedin" class="text-xl text-blue-600 group-hover:text-blue-700 transition-colors" />
         </a>
