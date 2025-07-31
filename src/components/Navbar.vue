@@ -68,7 +68,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 const navItems = [
   { id: 'inicio', label: 'Início', href: '#inicio' },
   { id: 'sobre', label: 'Sobre mim', href: '#sobre' },
-  { id: 'experiencias', label: 'Experiências', href: '#experiencias' },
+  //{ id: 'experiencias', label: 'Experiências', href: '#experiencias' },
   { id: 'projetos', label: 'Projetos', href: '#projetos' },
   { id: 'habilidades', label: 'Habilidades', href: '#habilidades' },
   { id: 'contato', label: 'Contato', href: '#contato' },
@@ -88,7 +88,33 @@ function toggleDark() {
 function scrollToSection(id) {
   const el = document.getElementById(id)
   if (el) {
-    el.scrollIntoView({ behavior: 'smooth' })
+    // Função de scroll suave personalizada
+    const targetPosition = el.getBoundingClientRect().top + window.pageYOffset - 80 // -80 para compensar a navbar fixa
+    const startPosition = window.pageYOffset
+    const distance = targetPosition - startPosition
+    let startTime = null
+
+    // Função de easing personalizada (ease-in-out)
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
+    }
+
+    function animation(currentTime) {
+      if (startTime === null) startTime = currentTime
+      const timeElapsed = currentTime - startTime
+      const duration = 1000 // 1 segundo de duração
+      
+      if (timeElapsed < duration) {
+        const progress = timeElapsed / duration
+        const ease = easeInOutCubic(progress)
+        window.scrollTo(0, startPosition + distance * ease)
+        requestAnimationFrame(animation)
+      } else {
+        window.scrollTo(0, targetPosition)
+      }
+    }
+
+    requestAnimationFrame(animation)
   }
 }
 

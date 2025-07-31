@@ -27,9 +27,40 @@ body {
 
 html {
   scroll-behavior: smooth;
+  /* Melhorias para scroll em dispositivos móveis */
+  -webkit-overflow-scrolling: touch;
+  /* Suaviza a rolagem em dispositivos com touchpad */
+  scroll-padding-top: 80px; /* Compensa a altura da navbar */
+}
+
+/* Melhorias específicas para Webkit (Chrome, Safari) */
+@media screen and (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Respeita preferências de acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 #app {
   width: 100%;
   min-height: 100vh;
+}
+
+/* Melhora a suavidade de transições globalmente */
+* {
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }

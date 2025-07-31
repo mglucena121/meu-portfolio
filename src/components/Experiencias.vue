@@ -26,7 +26,7 @@ const experiencias = [
     cargo: 'Desenvolvedor Júnior | Suporte Técnico manipulação de dados em banco',
     empresa: 'Intelite Tecnologia',
     periodo: 'Fev 2024 - Atual',
-    descricao: 'Atuo como desenvolvedor full stack com foco em aplicações web modernas, utilizando Vue.js no front-end e LoopBack no back-end. Também sou responsável por dar suporte técnico aos clientes e realizar manutenções e alterações no banco de dados. Trabalho com tecnologias como VUE, REACT, TAILWIND, HTML5, CSS3, JAVASCRIPT, APIs REST e MongoDB/SQL, conciliando desenvolvimento com atendimento técnico eficiente.'
+    descricao: 'Atuo como desenvolvedor full stack com foco em aplicações web modernas, utilizando Vue.js no front-end, LoopBack e node no back-end. Também sou responsável por dar suporte técnico aos clientes e realizar manutenções e alterações no banco de dados. Trabalho com tecnologias como VUE, REACT, TAILWIND, HTML5, CSS3, JAVASCRIPT, NODEJS, APIs REST e MongoDB/SQL, conciliando desenvolvimento com atendimento técnico eficiente.'
   },
   {
     id: 2,
