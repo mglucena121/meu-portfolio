@@ -1,7 +1,7 @@
 <template>
   <section id="experiencias" class="max-w-4xl mx-auto py-24 px-4 animate-fade-in">
     <h2 class="flex items-center justify-center gap-2 text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-10 text-center">
-      <LaptopIcon class="w-8 h-8 text-gray-500 dark:text-gray-400" /> Experiências
+      <Laptop class="w-8 h-8 text-gray-500 dark:text-gray-400" /> Experiências
     </h2>
     <div class="flex flex-col gap-8">
       <div v-for="exp in experiencias" :key="exp.id" 
@@ -20,6 +20,7 @@
 </template>
 
 <script setup>
+import { Laptop } from 'lucide-vue-next'
 const experiencias = [
   {
     id: 1,
