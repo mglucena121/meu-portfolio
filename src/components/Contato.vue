@@ -1,25 +1,18 @@
 <template>
   <section id="contato" class="relative py-24 px-4 overflow-hidden">
-    <!-- Background com gradiente -->
-    <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900"></div>
-    
-    <!-- Elementos decorativos -->
-    <div class="absolute inset-0 pointer-events-none opacity-30">
-      <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-blue-200 to-indigo-200 dark:from-blue-800/30 dark:to-indigo-800/30 rounded-full blur-2xl"></div>
-      <div class="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-800/30 dark:to-purple-800/30 rounded-full blur-2xl"></div>
-    </div>
+    <!-- Fundo neutro global; sem gradiente ou glows locais -->
 
     <div class="relative max-w-4xl mx-auto">
       <!-- Título melhorado -->
       <div class="text-center mb-16 animate-fade-in">
         <div class="inline-block relative mb-6">
           <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white relative z-10">
-            Entre em Contato
+            {{ t('meContate') }}
           </h2>
           <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></div>
         </div>
         <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-medium">
-          Vamos conversar sobre seu próximo projeto! Estou sempre aberto a novas oportunidades e colaborações.
+          {{ t('formulario') }}
         </p>
       </div>
 
@@ -27,7 +20,7 @@
         <!-- Informações de contato -->
         <div class="animate-fade-in delay-200">
           <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 dark:border-gray-700/50">
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Vamos conectar!</h3>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ t('meContate') }}!</h3>
             
             <div class="space-y-6">
               <!-- Email -->
@@ -78,8 +71,8 @@
 
             <div class="mt-8 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-100 dark:border-blue-800/50">
               <p class="text-sm text-gray-700 dark:text-gray-300">
-                <span class="font-semibold text-blue-600 dark:text-blue-400">💡 Dica:</span> 
-                Respondo rapidamente! Geralmente em até 24 horas.
+                <span class="font-semibold text-blue-600 dark:text-blue-400">💡 Tip:</span> 
+                I respond quickly! Usually within 24 hours.
               </p>
             </div>
           </div>
