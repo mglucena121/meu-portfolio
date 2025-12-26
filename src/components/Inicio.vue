@@ -18,7 +18,32 @@
         <p class="mt-3 text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
           {{ t('graduadoSistemas') }}
         </p>
-        <div class="w-12 h-0.5 bg-gray-400 dark:bg-gray-600 mx-auto mt-6"></div>
+      </div>
+
+      <!-- Botões de ação -->
+      <div class="animate-fade-in delay-400 flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <button 
+          @click="scrollToProjetos"
+          class="group px-8 py-3.5 bg-slate-700 dark:bg-slate-600 text-white rounded-xl font-medium hover:bg-slate-800 dark:hover:bg-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+        >
+          <span class="flex items-center gap-2">
+            {{ t('verProjetos') }}
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </button>
+        <button 
+          @click="scrollToContact"
+          class="group px-8 py-3.5 bg-white dark:bg-gray-800 text-slate-700 dark:text-slate-300 border-2 border-slate-300 dark:border-slate-600 rounded-xl font-medium hover:border-slate-500 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-white transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+        >
+          <span class="flex items-center gap-2">
+            {{ t('entrarEmContato') }}
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+          </span>
+        </button>
       </div>
     </div>
   </section>
@@ -28,6 +53,38 @@
 import { useLanguage } from '../composables/useLanguage'
 
 const { t } = useLanguage()
+
+function scrollToProjetos() {
+  const el = document.getElementById('projetos')
+  if (el) {
+    const targetPosition = el.getBoundingClientRect().top + window.pageYOffset - 80
+    const startPosition = window.pageYOffset
+    const distance = targetPosition - startPosition
+    let startTime = null
+
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
+    }
+
+    function animation(currentTime) {
+      if (startTime === null) startTime = currentTime
+      const timeElapsed = currentTime - startTime
+      const duration = 1000
+      
+      if (timeElapsed < duration) {
+        const progress = timeElapsed / duration
+        const ease = easeInOutCubic(progress)
+        window.scrollTo(0, startPosition + distance * ease)
+        requestAnimationFrame(animation)
+      } else {
+        window.scrollTo(0, targetPosition)
+      }
+    }
+
+    requestAnimationFrame(animation)
+  }
+}
+
 function scrollToContact() {
   const el = document.getElementById('contato')
   if (el) {

@@ -25,8 +25,8 @@ import SectionDivider from './components/SectionDivider.vue'
       <SectionDivider />
       <Habilidades />
       <SectionDivider />
-      <Experiencias />
-      <SectionDivider />
+      <!-- <Experiencias />
+      <SectionDivider /> -->
       <Projetos />
       <SectionDivider />
       <Contato />

@@ -9,7 +9,7 @@
           <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white relative z-10">
             {{ t('meContate') }}
           </h2>
-          <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></div>
+          <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-28 md:w-36 h-1 bg-gradient-to-r from-slate-400 via-slate-500 to-slate-400 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600 rounded-full"></div>
         </div>
         <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-medium">
           {{ t('formulario') }}

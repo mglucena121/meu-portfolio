@@ -9,7 +9,7 @@
           <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white relative z-10">
             {{ t('minhasHabilidades') }}
           </h2>
-          <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-28 h-1 bg-gradient-to-r from-blue-500 via-slate-400 to-blue-500 dark:from-blue-400 dark:via-slate-500 dark:to-blue-400 rounded-full"></div>
+          <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-28 md:w-36 h-1 bg-gradient-to-r from-slate-400 via-slate-500 to-slate-400 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600 rounded-full"></div>
         </div>
         <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-medium leading-relaxed">
           {{ t('habilidadesDesc') }}
@@ -24,7 +24,6 @@
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {{ t('frontend') }}
             </h3>
-            <p class="text-gray-600 dark:text-gray-400">{{ t('frontendDesc') }}</p>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
             <div v-for="skill in frontendSkills" :key="skill.nome" 
@@ -47,7 +46,6 @@
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {{ t('backend') }}
             </h3>
-            <p class="text-gray-600 dark:text-gray-400">{{ t('backendDesc') }}</p>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
             <div v-for="skill in backendSkills" :key="skill.nome" 
@@ -70,7 +68,6 @@
             <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               {{ t('ferramentas') }}
             </h3>
-            <p class="text-gray-600 dark:text-gray-400">{{ t('ferramentasDesc') }}</p>
           </div>
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
             <div v-for="skill in toolsSkills" :key="skill.nome" 

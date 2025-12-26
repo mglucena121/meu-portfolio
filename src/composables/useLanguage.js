@@ -1,6 +1,14 @@
 import { ref, computed } from 'vue'
 
-const lang = ref('en')
+const initialLang = (() => {
+  try {
+    const saved = localStorage.getItem('language')
+    return saved || 'pt'
+  } catch {
+    return 'pt'
+  }
+})()
+const lang = ref(initialLang)
 
 export const useLanguage = () => {
   const translations = {
@@ -16,26 +24,25 @@ export const useLanguage = () => {
       olaSouMario: 'Olá, sou Mário Gomes',
       desenvolvedorFullStack: 'Desenvolvedor Web full stack',
       graduadoSistemas: 'Graduado em sistemas para Internet.',
+      verProjetos: 'Ver Projetos',
+      entrarEmContato: 'Entrar em Contato',
       
       // SobreMim
       sobreMim: 'Sobre Mim',
-      sobreTexto: 'Olá, eu sou Mário!',
-      sobreDescricao: 'Sou um desenvolvedor web apaixonado por criar soluções digitais inovadoras. Trabalho com tecnologias modernas como Vue.js, React, Node.js e MongoDB para construir aplicações rápidas, escaláveis e user-friendly.',
+      sobreTexto: 'Quem sou eu ?',
+      sobreDescricao: 'Sou desenvolvedor web full stack apaixonado por tecnologia e por resolver problemas através de código. Atuo tanto no front-end quanto no back-end, criando aplicações web modernas, funcionais e bem estruturadas.',
       
       // Habilidades
       minhasHabilidades: 'Minhas Habilidades',
-      habilidadesDesc: 'Tecnologias e ferramentas que domino para criar soluções web modernas, eficientes e escaláveis',
+      habilidadesDesc: 'Tecnologias e ferramentas que domino.',
       frontend: 'Frontend Development',
-      frontendDesc: 'Criando interfaces responsivas e acessíveis',
       backend: 'Backend Development',
-      backendDesc: 'Construindo APIs robustas e escaláveis',
       ferramentas: 'Ferramentas',
-      ferramentasDesc: 'Ferramentas essenciais do meu dia a dia',
       sempreAprendendo: 'Sempre Aprendendo',
       sempreAprendendoDesc: 'Evoluindo continuamente com boas práticas e novas ferramentas.',
       
       // Experiencias
-      minhasExperiencias: 'Minhas Experiências',
+      minhasExperiencias: 'Experiências',
       intelite: 'Intelite Tecnologia',
       desenvolvedorFrontend: 'Desenvolvedor Front-end',
       desenvolvedorBackend: 'Desenvolvedor Back-end',
@@ -69,6 +76,8 @@ export const useLanguage = () => {
       olaSouMario: 'Hello, I\'m Mário Gomes',
       desenvolvedorFullStack: 'Full Stack Web Developer',
       graduadoSistemas: 'Graduated in Systems for the Internet.',
+      verProjetos: 'View Projects',
+      entrarEmContato: 'Get in Touch',
       
       // SobreMim
       sobreMim: 'About Me',
@@ -77,18 +86,15 @@ export const useLanguage = () => {
       
       // Habilidades
       minhasHabilidades: 'My Skills',
-      habilidadesDesc: 'Technologies and tools I master to create modern, efficient and scalable web solutions',
+      habilidadesDesc: 'Technologies and tools I master to create modern web solutions',
       frontend: 'Frontend Development',
-      frontendDesc: 'Creating responsive and accessible interfaces',
       backend: 'Backend Development',
-      backendDesc: 'Building robust and scalable APIs',
       ferramentas: 'Tools',
-      ferramentasDesc: 'Essential tools in my daily work',
       sempreAprendendo: 'Always Learning',
       sempreAprendendoDesc: 'Continuously evolving with best practices and new tools.',
       
       // Experiencias
-      minhasExperiencias: 'My Experience',
+      minhasExperiencias: 'Experience',
       intelite: 'Intelite Tecnologia',
       desenvolvedorFrontend: 'Frontend Developer',
       desenvolvedorBackend: 'Backend Developer',
