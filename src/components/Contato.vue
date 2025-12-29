@@ -11,16 +11,13 @@
           </h2>
           <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-28 md:w-36 h-1 bg-gradient-to-r from-slate-400 via-slate-500 to-slate-400 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600 rounded-full"></div>
         </div>
-        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-medium">
-          {{ t('formulario') }}
-        </p>
       </div>
 
       <div class="grid lg:grid-cols-2 gap-12 items-start">
         <!-- Informações de contato -->
         <div class="animate-fade-in delay-200">
           <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 dark:border-gray-700/50">
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ t('meContate') }}!</h3>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Informações de contato</h3>
             
             <div class="space-y-6">
               <!-- Email -->

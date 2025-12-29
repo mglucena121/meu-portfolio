@@ -21,7 +21,7 @@ export const useLanguage = () => {
       contato: 'Contato',
       
       // Inicio
-      olaSouMario: 'Olá, sou Mário Gomes',
+      olaSouMario: 'Mário Gomes',
       desenvolvedorFullStack: 'Desenvolvedor Web full stack',
       graduadoSistemas: 'Graduado em sistemas para Internet.',
       verProjetos: 'Ver Projetos',
@@ -29,7 +29,7 @@ export const useLanguage = () => {
       
       // SobreMim
       sobreMim: 'Sobre Mim',
-      sobreTexto: 'Quem sou eu ?',
+      sobreTexto: 'Olá! Muito prazer!',
       sobreDescricao: 'Sou desenvolvedor web full stack apaixonado por tecnologia e por resolver problemas através de código. Atuo tanto no front-end quanto no back-end, criando aplicações web modernas, funcionais e bem estruturadas.',
       
       // Habilidades
@@ -54,7 +54,7 @@ export const useLanguage = () => {
       verMais: 'Ver mais',
       
       // Contato
-      meContate: 'Me Contate',
+      meContate: 'Entre em contato',
       formulario: 'Envie uma mensagem',
       nome: 'Seu nome',
       email: 'Seu email',
@@ -73,7 +73,7 @@ export const useLanguage = () => {
       contato: 'Contact',
       
       // Inicio
-      olaSouMario: 'Hello, I\'m Mário Gomes',
+      olaSouMario: 'Mário Gomes',
       desenvolvedorFullStack: 'Full Stack Web Developer',
       graduadoSistemas: 'Graduated in Systems for the Internet.',
       verProjetos: 'View Projects',

@@ -1,8 +1,101 @@
 <template>
-  <section id="projetos" class="relative py-24 px-4 overflow-hidden">
+  <section id="projetos" ref="elementRef" class="relative py-24 px-4 overflow-hidden" :class="{ 'animate-section-visible': isVisible }">
+    
+    <!-- Modal de detalhes do projeto -->
+    <Transition name="modal">
+      <div v-if="projetoSelecionado" @click="fecharModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div @click.stop class="relative bg-white dark:bg-gray-800 rounded-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden shadow-2xl">
+          <!-- Botão fechar melhorado -->
+          <button @click="fecharModal" class="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 dark:bg-gray-900/90 hover:bg-white dark:hover:bg-gray-900 shadow-lg transition-all hover:scale-110">
+            <svg class="w-5 h-5 text-gray-700 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+
+          <!-- Container com scroll -->
+          <div class="overflow-y-auto max-h-[85vh] custom-scrollbar">
+            <!-- Imagem do projeto: clicável para ampliar -->
+            <div class="w-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center cursor-zoom-in relative group" style="max-height: 45vh;" @click="toggleImagemAmpliada">
+              <img :src="projetoSelecionado.imagem" :alt="projetoSelecionado.titulo"
+                   class="max-h-[45vh] w-auto h-auto transition-transform duration-300"
+                   :class="modalImageFit === 'contain' ? 'object-contain' : 'object-cover'" />
+              
+              <!-- Ícone de zoom que aparece no hover -->
+              <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20">
+                <div class="bg-white/90 dark:bg-gray-900/90 rounded-full p-3 shadow-lg">
+                  <svg class="w-6 h-6 text-gray-700 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Conteúdo separado -->
+            <div class="p-6 md:p-8 lg:p-10">
+              <!-- Título -->
+              <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                {{ projetoSelecionado.titulo }}
+              </h2>
+
+              <!-- Tecnologias -->
+              <div class="flex flex-wrap gap-2 mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                <span v-for="tech in projetoSelecionado.tecnologias" :key="tech"
+                      class="px-3 py-1.5 text-xs md:text-sm font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                  {{ tech }}
+                </span>
+              </div>
+
+              <!-- Descrição completa em parágrafos -->
+              <div class="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                <p v-for="(paragrafo, index) in projetoSelecionado.descricao" :key="index" class="text-base md:text-lg">
+                  {{ paragrafo }}
+                </p>
+              </div>
+
+              <!-- Botões de ação -->
+              <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <a :href="projetoSelecionado.github" target="_blank" 
+                   class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gray-900 dark:bg-gray-700 text-white rounded-xl font-semibold hover:bg-gray-800 dark:hover:bg-gray-600 transition-all hover:shadow-lg hover:-translate-y-0.5">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  Ver no GitHub
+                </a>
+                <a v-if="projetoSelecionado.link && projetoSelecionado.link !== '#'" :href="projetoSelecionado.link" target="_blank"
+                   class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all hover:shadow-lg hover:-translate-y-0.5">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                  </svg>
+                  Ver Demo ao Vivo
+                </a>
+                <button @click="fecharModal"
+                   class="sm:w-auto px-6 py-3.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
+                  Fechar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- Lightbox para imagem ampliada -->
+    <Transition name="lightbox">
+      <div v-if="imagemAmpliada && projetoSelecionado" @click="toggleImagemAmpliada" class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm cursor-zoom-out">
+        <button @click.stop="toggleImagemAmpliada" class="absolute top-4 right-4 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 shadow-lg transition-all hover:scale-110">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+        
+        <img @click.stop :src="projetoSelecionado.imagem" :alt="projetoSelecionado.titulo"
+             class="max-w-[95vw] max-h-[95vh] object-contain shadow-2xl" />
+      </div>
+    </Transition>
+
     <!-- Sem fundos próprios; usa o fundo global -->
 
-    <div class="relative max-w-6xl mx-auto animate-fade-in">
+    <div class="relative max-w-6xl mx-auto animate-section-content">
       <!-- Título melhorado -->
       <div class="text-center mb-16">
         <div class="inline-block relative mb-6">
@@ -17,33 +110,32 @@
       </div>
 
       <!-- Grid de projetos melhorado -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div v-for="(projeto, index) in projetos" :key="projeto.titulo" 
-              class="project-card group relative overflow-hidden rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-3 hover:scale-[1.02] hover:ring-1 hover:ring-blue-400/25"
-             :style="{ animationDelay: `${index * 200}ms` }">
-          
+      <div class="flex flex-wrap justify-center gap-8">
+        <div
+          v-for="(projeto, index) in projetos"
+          :key="projeto.titulo"
+          class="project-card group relative overflow-hidden rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-3 hover:scale-[1.02] hover:ring-1 hover:ring-blue-400/25 w-full max-w-sm min-h-[520px] flex flex-col"
+          :style="{ animationDelay: `${index * 200}ms` }"
+        >
+
           <!-- Fundo neutro do card -->
           <div class="absolute inset-0 bg-white/85 dark:bg-gray-800/85 backdrop-blur-sm rounded-2xl border border-gray-200/60 dark:border-gray-700/50"></div>
-          
-          <div class="relative z-10 p-0">
-            <!-- Imagem com overlay -->
-            <div class="relative overflow-hidden rounded-t-2xl">
-              <img :src="projeto.imagem" :alt="projeto.titulo" 
-                   class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500" />
-              
+
+          <div class="relative z-10 p-0 flex flex-col h-full">
+            <!-- Imagem centralizada e sem corte -->
+            <div class="relative overflow-hidden rounded-t-2xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900" style="aspect-ratio: 16/9;">
+              <img
+                :src="projeto.imagem"
+                :alt="projeto.titulo"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+
               <!-- Overlay neutro no hover -->
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
-              <!-- Ícone de link no hover -->
-              <div class="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transform scale-0 group-hover:scale-100 transition-all duration-300">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                </svg>
-              </div>
             </div>
-            
+
             <!-- Conteúdo do card -->
-            <div class="p-6">
+            <div class="p-6 flex flex-col flex-1">
               <!-- Badge de tecnologia -->
               <div class="flex flex-wrap gap-2 mb-4">
                 <span v-for="tech in projeto.tecnologias" :key="tech"
@@ -51,26 +143,26 @@
                   {{ tech }}
                 </span>
               </div>
-              
+
               <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
                 {{ projeto.titulo }}
               </h3>
-              
-              <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
-                {{ projeto.descricao }}
+
+              <p class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed line-clamp-3">
+                {{ Array.isArray(projeto.descricao) ? projeto.descricao.join(' ') : projeto.descricao }}
               </p>
-              
+
               <!-- Botões de ação -->
-              <div class="flex gap-3">
-                <a :href="projeto.link" target="_blank" 
+              <div class="flex gap-3 mt-auto">
+                <button @click="abrirModal(projeto)"
                    class="flex-1 inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-500 transition-colors duration-200 text-sm">
                   <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                   </svg>
                   {{ t('verMais') }}
-                </a>
-                
+                </button>
+
                  <a :href="projeto.github" target="_blank" 
                    class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 text-sm">
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -87,35 +179,102 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useLanguage } from '../composables/useLanguage'
+import { useScrollAnimation } from '../composables/useScrollAnimation'
 
 const { t } = useLanguage()
+const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.1 })
+
+const projetoSelecionado = ref(null)
+const modalAspectRatio = ref(null)
+const modalImageFit = ref('contain') // define se usa object-contain ou object-cover
+const imagemAmpliada = ref(false) // Controla o zoom da imagem
+
+const abrirModal = (projeto) => {
+  projetoSelecionado.value = projeto
+  imagemAmpliada.value = false
+  document.body.style.overflow = 'hidden'
+
+  // Calcular o aspect ratio da imagem para evitar cortes (sem zoom)
+  modalAspectRatio.value = null
+  modalImageFit.value = 'contain'
+  const img = new Image()
+  img.src = projeto.imagem
+  img.onload = () => {
+    // Define o aspect-ratio do container como Largura/Altura da imagem
+    modalAspectRatio.value = `${img.naturalWidth} / ${img.naturalHeight}`
+    modalImageFit.value = img.naturalHeight > img.naturalWidth ? 'contain' : 'cover'
+  }
+}
+
+const fecharModal = () => {
+  projetoSelecionado.value = null
+  imagemAmpliada.value = false
+  document.body.style.overflow = ''
+}
+
+const toggleImagemAmpliada = () => {
+  imagemAmpliada.value = !imagemAmpliada.value
+}
+
+// Fechar modal com tecla ESC
+const handleKeydown = (e) => {
+  if (e.key === 'Escape' && projetoSelecionado.value) {
+    fecharModal()
+  }
+}
+
+// Adicionar/remover listener de teclado
+onMounted(() => {
+  document.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
+  document.body.style.overflow = ''
+})
+
+// Helper para montar URL de imagens em public/images respeitando BASE_URL
+const publicImage = (file) => `${import.meta.env.BASE_URL}images/${file}`
 
 const projetos = [
   {
     titulo: 'E-commerce Moderno',
-    descricao: 'Plataforma completa de e-commerce com carrinho, pagamentos e dashboard administrativo.',
-    imagem: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop',
+    descricao: [
+      'Plataforma completa de e-commerce com carrinho de compras, sistema de pagamentos integrado e dashboard administrativo.',
+      'Sistema desenvolvido com foco em performance e experiência do usuário, incluindo filtros avançados de produtos, sistema de avaliações e controle de estoque em tempo real.',
+      'Painel administrativo completo para gerenciamento de produtos, pedidos, clientes e relatórios de vendas.'
+    ],
+    imagem: publicImage('projeto_m1.png'),
     link: '#',
     github: '#',
-    tecnologias: ['Vue.js', 'Node.js', 'MongoDB']
+    tecnologias: ['React', 'Node.js', 'MongoDB Atlas', "Express", "Tailwind CSS", "Swagger"]
   },
   {
-    titulo: 'Dashboard Analytics',
-    descricao: 'Interface moderna para análise de dados com gráficos interativos e relatórios em tempo real.',
-    imagem: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop',
+    titulo: 'Automação de json para excel',
+    descricao: [
+      'A aplicação permite ao usuário informar a URL de uma API REST que retorna dados em formato JSON e escolher o local onde o arquivo Excel será salvo.',
+      'A partir disso, o sistema realiza o consumo dos dados via requisição HTTP do tipo GET, processa e normaliza as informações recebidas e converte automaticamente os dados para uma planilha Excel (.xlsx).',
+      'Durante todo o processo, a interface exibe uma barra de progresso com feedback em tempo real, garantindo uma melhor experiência ao usuário.'
+    ],
+    imagem: publicImage('Captura de tela 2025-12-29 145009.png'),
     link: '#',
     github: '#',
-    tecnologias: ['React', 'Chart.js', 'API REST']
+    tecnologias: ['Python', 'PySide 6', 'API REST', 'Pandas']
   },
-  {
-    titulo: 'App Mobile Fitness',
-    descricao: 'Aplicativo para acompanhamento de exercícios e metas de saúde com sincronização na nuvem.',
-    imagem: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
-    link: '#',
-    github: '#',
-    tecnologias: ['React Native', 'Firebase', 'TypeScript']
-  },
+  // {
+  //   titulo: 'App Mobile Fitness',
+  //   descricao: [
+  //     'Aplicativo mobile para acompanhamento de exercícios e metas de saúde com sincronização em tempo real na nuvem.',
+  //     'Inclui recursos de rastreamento de atividades, definição de metas personalizadas, gráficos de progresso e integração com dispositivos wearables.',
+  //     'Sistema de notificações para lembrar usuários de seus treinos e celebrar conquistas alcançadas.'
+  //   ],
+  //   imagem: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
+  //   link: '#',
+  //   github: '#',
+  //   tecnologias: ['React Native', 'Firebase', 'TypeScript']
+  // },
 ]
 
 // Badges neutros; mapeamento de cores removido
@@ -155,6 +314,92 @@ function scrollToContact() {
 </script>
 
 <style scoped>
+/* Custom scrollbar para o modal */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.5);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.7);
+}
+
+/* Dark mode scrollbar */
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.5);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(75, 85, 99, 0.7);
+}
+
+/* Truncamento de texto com ellipsis */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Animações do modal */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-enter-active > div,
+.modal-leave-active > div {
+  transition: transform 0.3s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-from > div,
+.modal-leave-to > div {
+  transform: scale(0.9);
+}
+
+/* Animações do lightbox */
+.lightbox-enter-active,
+.lightbox-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-enter-active img,
+.lightbox-leave-active img {
+  transition: transform 0.3s ease;
+}
+
+.lightbox-enter-from,
+.lightbox-leave-to {
+  opacity: 0;
+}
+
+.lightbox-enter-from img,
+.lightbox-leave-to img {
+  transform: scale(0.8);
+}
+
+/* Cursor customizado */
+.cursor-zoom-in {
+  cursor: zoom-in;
+}
+
+.cursor-zoom-out {
+  cursor: zoom-out;
+}
+
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: none; }
@@ -198,5 +443,26 @@ function scrollToContact() {
 .project-card:hover .gradient-border {
   animation: gradient-border 3s ease infinite;
   background-size: 400% 400%;
+}
+
+/* Animações de scroll */
+section {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+
+section.animate-section-visible {
+  opacity: 1;
+}
+
+section .animate-section-content {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+section.animate-section-visible .animate-section-content {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style> 

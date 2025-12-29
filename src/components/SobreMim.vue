@@ -1,15 +1,15 @@
 <template>
-  <section id="sobre" class="relative py-8 md:py-12 px-4 overflow-hidden">
+  <section id="sobre" ref="elementRef" class="relative py-8 md:py-12 px-4 overflow-hidden" :class="{ 'animate-section-visible': isVisible }">
     <!-- Sem glows locais: fundo 100% uniforme -->
 
-    <div class="relative max-w-6xl mx-auto">
+    <div class="relative max-w-6xl mx-auto animate-section-content">
       <!-- Título minimalista -->
       <div class="text-center mb-16 animate-fade-in">
         <div class="inline-block relative">
-          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 relative z-10">
+          <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-2 relative z-10">
             {{ t('sobreMim') }}
           </h2>
-          <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-28 md:w-36 h-1 bg-gradient-to-r from-slate-400 via-slate-500 to-slate-400 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600 rounded-full"></div>
+          <div class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-28 md:w-36 h-1 bg-gradient-to-r from-slate-400 via-slate-500 to-slate-400 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600 rounded-full"></div>
         </div>
         <!-- <p class="text-lg text-gray-600 dark:text-gray-400 mt-6 max-w-2xl mx-auto font-normal">
           {{ t('sobreDescricao') }}
@@ -17,69 +17,68 @@
       </div>
 
       <!-- Conteúdo principal com layout em grid -->
-      <div class="grid lg:grid-cols-1 gap-12 items-center">
-        <!-- Conteúdo unificado -->
+      <div class="grid gap-6 md:gap-8">
+        <!-- Card de Apresentação -->
         <div class="animate-fade-in delay-200">
-          <!-- Card único com todo o conteúdo -->
-          <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/30 hover:shadow-xl transition-all duration-300">
-            <div class="space-y-6">
-              <!-- Apresentação -->
-              <div>
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">{{ t('sobreTexto') }}</h3>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                  {{ t('sobreDescricao') }}
-                </p>
-              </div>
+          <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/30 hover:shadow-xl transition-all duration-300">
+            <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4">{{ t('sobreTexto') }}</h3>
+            <div class="space-y-4 text-base md:text-lg">
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                {{ t('sobreDescricao') }}
+              </p>
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                Tenho experiência com <span class="font-semibold text-gray-800 dark:text-gray-200">Vue.js, React, Node.js, integrações de APIs, LoopBack, Express, MongoDB, Tailwind CSS</span> desenvolvendo e dando manutenção em sistemas web.
+              </p>
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                Meu objetivo é criar soluções que otimizem processos, aumentem a produtividade e gerem resultados reais para empresas e pessoas, enquanto sigo evoluindo profissionalmente através de novos desafios.
+              </p>
+            </div>
+          </div>
+        </div>
 
-              <!-- Experiência profissional -->
-              <div>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-                  Tenho Experiências com <span class="font-semibold text-gray-800 dark:text-gray-200">Vue.js, React, Node.js, integrações de APIs, LoopBack, Express, MongoDB, Tailwind CSS</span> desenvolvendo e dando manutenção em sistemas web.
-                </p>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                  Meu objetivo é criar soluções que otimizem processos, aumentem a produtividade e gerem resultados reais para empresas e pessoas, enquanto sigo evoluindo profissionalmente através de novos desafios.
-                </p>              
-              </div>
-
-              <!-- Experiências dentro do mesmo card -->
-              <div class="pt-6 border-t border-gray-200 dark:border-gray-700/50">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">{{ t('minhasExperiencias') }}</h3>
-                <div class="flex flex-col gap-6">
-                  <div v-for="exp in experiencias" :key="exp.id"
-                    class="border-l-4 border-slate-500/60 pl-4"
-                  >
-                    <div class="flex items-start justify-between gap-4 mb-1">
-                      <div class="flex items-center gap-2">
-                        <span class="inline-block w-2 h-2 rounded-full bg-slate-500/80"></span>
-                        <div class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ exp.cargo }}</div>
-                      </div>
-                      <div class="text-gray-500 dark:text-gray-400 text-sm whitespace-nowrap">{{ exp.periodo }} · {{ formatDuration(exp.inicio, exp.fim) }}</div>
-                    </div>
-                    <div class="text-slate-600 dark:text-slate-300 font-medium">{{ exp.empresa }}</div>
-                    <div class="text-gray-600 dark:text-gray-300 mt-2 leading-relaxed">{{ exp.descricao }}</div>
+        <!-- Card de Experiências -->
+        <div class="animate-fade-in delay-300">
+          <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/30 hover:shadow-xl transition-all duration-300">
+            <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ t('minhasExperiencias') }}</h3>
+            <div class="space-y-6 md:space-y-8">
+              <div v-for="exp in experiencias" :key="exp.id"
+                class="border-l-4 border-slate-500/60 pl-4 md:pl-6"
+              >
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4 mb-2">
+                  <div class="flex items-start gap-2">
+                    <span class="inline-block w-2 h-2 rounded-full bg-slate-500/80 mt-1.5 flex-shrink-0"></span>
+                    <h4 class="text-base md:text-lg font-semibold text-gray-800 dark:text-gray-200 leading-snug">{{ exp.cargo }}</h4>
+                  </div>
+                  <div class="text-gray-500 dark:text-gray-400 text-xs md:text-sm sm:text-right flex-shrink-0 pl-8 sm:pl-0">
+                    <div>{{ exp.periodo }}</div>
+                    <div class="text-xs">{{ formatDuration(exp.inicio, exp.fim) }}</div>
                   </div>
                 </div>
+                <div class="text-slate-600 dark:text-slate-300 font-medium mb-3 text-sm md:text-base pl-4">{{ exp.empresa }}</div>
+                <p class="text-gray-600 dark:text-gray-300 text-sm md:text-base leading-relaxed pl-4">{{ exp.descricao }}</p>
               </div>
+            </div>
+          </div>
+        </div>
 
-              <!-- Educação dentro do mesmo card -->
-              <div class="pt-6 border-t border-gray-200 dark:border-gray-700/50">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">Educação</h3>
-                <div class="flex flex-col gap-6">
-                  <div v-for="edu in educacao" :key="edu.id"
-                    class="border-l-4 border-slate-500/60 pl-4"
-                  >
-                    <div class="flex items-start justify-between gap-4 mb-1">
-                      <div class="flex items-center gap-2">
-                        <span class="inline-block w-2 h-2 rounded-full bg-slate-500/80"></span>
-                        <div class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ edu.curso }}</div>
-                      </div>
-                      <div class="text-gray-500 dark:text-gray-400 text-sm whitespace-nowrap">{{ edu.periodo }}</div>
-                    </div>
-                    <div class="text-slate-600 dark:text-slate-300 font-medium">{{ edu.instituicao }}</div>
-                    <div class="text-gray-600 dark:text-gray-300 mt-2 leading-relaxed space-y-3">
-                      <p v-for="(paragrafo, index) in edu.descricao" :key="index">{{ paragrafo }}</p>
-                    </div>
+        <!-- Card de Educação -->
+        <div class="animate-fade-in delay-400">
+          <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/30 hover:shadow-xl transition-all duration-300">
+            <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-6">Educação</h3>
+            <div class="space-y-6 md:space-y-8">
+              <div v-for="edu in educacao" :key="edu.id"
+                class="border-l-4 border-slate-500/60 pl-4 md:pl-6"
+              >
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4 mb-2">
+                  <div class="flex items-start gap-2">
+                    <span class="inline-block w-2 h-2 rounded-full bg-slate-500/80 mt-1.5 flex-shrink-0"></span>
+                    <h4 class="text-base md:text-lg font-semibold text-gray-800 dark:text-gray-200 leading-snug">{{ edu.curso }}</h4>
                   </div>
+                  <div class="text-gray-500 dark:text-gray-400 text-xs md:text-sm flex-shrink-0 pl-8 sm:pl-0">{{ edu.periodo }}</div>
+                </div>
+                <div class="text-slate-600 dark:text-slate-300 font-medium mb-3 text-sm md:text-base pl-4">{{ edu.instituicao }}</div>
+                <div class="text-gray-600 dark:text-gray-300 text-sm md:text-base leading-relaxed space-y-2 pl-4">
+                  <p v-for="(paragrafo, index) in edu.descricao" :key="index">{{ paragrafo }}</p>
                 </div>
               </div>
             </div>
@@ -102,8 +101,10 @@
 
 <script setup>
 import { useLanguage } from '../composables/useLanguage'
+import { useScrollAnimation } from '../composables/useScrollAnimation'
 
 const { t } = useLanguage()
+const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 })
 
 // Util para calcular duração em anos e meses (pt-BR)
 const formatDuration = (inicio, fim) => {
@@ -200,5 +201,26 @@ const educacao = [
 
 .animate-pulse-slow {
   animation: pulse-slow 3s infinite;
+}
+
+/* Animações de scroll */
+section {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+
+section.animate-section-visible {
+  opacity: 1;
+}
+
+section .animate-section-content {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+section.animate-section-visible .animate-section-content {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style> 

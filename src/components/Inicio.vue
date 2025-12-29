@@ -1,21 +1,21 @@
 <template>
-  <section id="inicio" class="relative flex flex-col items-center justify-center min-h-screen pt-20 pb-10 text-center overflow-hidden">
+  <section id="inicio" class="relative flex flex-col items-center justify-center min-h-screen py-20 text-center overflow-hidden">
     <!-- Sem glows locais: fundo 100% uniforme -->
 
     <div class="relative z-10 max-w-4xl mx-auto px-4">
-      <!-- Título principal profissional -->
-      <div class="animate-fade-in">        
-        <h2  class="text-3xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight tracking-tight whitespace-nowrap">
-          {{ t('olaSouMario') }}
-        </h2>
+      <!-- Nome como título principal -->
+      <div class="animate-fade-in mb-8">        
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-2 leading-tight tracking-tight">
+          Mário Gomes
+        </h1>
       </div>
 
-      <!-- Subtítulo minimalista -->
-      <div class="animate-fade-in delay-200 mb-8">
-        <p class="text-lg md:text-2xl text-gray-600 dark:text-gray-400 font-normal tracking-wide">
+      <!-- Cargo/Especialização -->
+      <div class="animate-fade-in delay-200 mb-12">
+        <h2 class="text-2xl md:text-3xl text-gray-700 dark:text-gray-300 font-semibold tracking-wide mb-6">
           {{ t('desenvolvedorFullStack') }}
-        </p>
-        <p class="mt-3 text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        </h2>
+        <p class="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
           {{ t('graduadoSistemas') }}
         </p>
       </div>
@@ -24,22 +24,22 @@
       <div class="animate-fade-in delay-400 flex flex-col sm:flex-row gap-4 justify-center items-center">
         <button 
           @click="scrollToProjetos"
-          class="group px-8 py-3.5 bg-slate-700 dark:bg-slate-600 text-white rounded-xl font-medium hover:bg-slate-800 dark:hover:bg-slate-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+          class="group px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-2xl hover:-translate-y-1 active:translate-y-0 min-w-[200px]"
         >
-          <span class="flex items-center gap-2">
+          <span class="flex items-center justify-center gap-2">
             {{ t('verProjetos') }}
-            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>
           </span>
         </button>
         <button 
           @click="scrollToContact"
-          class="group px-8 py-3.5 bg-white dark:bg-gray-800 text-slate-700 dark:text-slate-300 border-2 border-slate-300 dark:border-slate-600 rounded-xl font-medium hover:border-slate-500 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-white transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+          class="group px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white border-2 border-gray-300 dark:border-gray-600 rounded-xl font-semibold hover:border-blue-500 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 active:translate-y-0 min-w-[200px]"
         >
-          <span class="flex items-center gap-2">
+          <span class="flex items-center justify-center gap-2">
             {{ t('entrarEmContato') }}
-            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
             </svg>
           </span>
@@ -69,7 +69,7 @@ function scrollToProjetos() {
     function animation(currentTime) {
       if (startTime === null) startTime = currentTime
       const timeElapsed = currentTime - startTime
-      const duration = 1000
+      const duration = 800
       
       if (timeElapsed < duration) {
         const progress = timeElapsed / duration
@@ -102,7 +102,7 @@ function scrollToContact() {
     function animation(currentTime) {
       if (startTime === null) startTime = currentTime
       const timeElapsed = currentTime - startTime
-      const duration = 1000 // 1 segundo de duração
+      const duration = 800
       
       if (timeElapsed < duration) {
         const progress = timeElapsed / duration

@@ -1,8 +1,8 @@
 <template>
-  <section id="habilidades" class="relative py-24 px-4 overflow-hidden">
+  <section id="habilidades" ref="elementRef" class="relative py-24 px-4 overflow-hidden" :class="{ 'animate-section-visible': isVisible }">
     <!-- Sem fundos próprios; usa o fundo global -->
 
-    <div class="relative max-w-6xl mx-auto">
+    <div class="relative max-w-6xl mx-auto animate-section-content">
       <!-- Título melhorado -->
       <div class="text-center mb-20">
         <div class="inline-block relative mb-6">
@@ -100,8 +100,10 @@
 
 <script setup>
 import { useLanguage } from '../composables/useLanguage'
+import { useScrollAnimation } from '../composables/useScrollAnimation'
 
 const { t } = useLanguage()
+const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.1 })
 
 const frontendSkills = [
   { nome: 'Vue.js', icone: 'logos:vue' },
@@ -199,5 +201,26 @@ const toolsSkills = [
 
 .dark .skill-card:hover {
   background: linear-gradient(135deg, rgba(55, 65, 81, 0.9) 0%, rgba(75, 85, 99, 0.9) 100%);
+}
+
+/* Animações de scroll */
+section {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+
+section.animate-section-visible {
+  opacity: 1;
+}
+
+section .animate-section-content {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+section.animate-section-visible .animate-section-content {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style> 

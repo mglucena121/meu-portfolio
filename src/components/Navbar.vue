@@ -110,7 +110,7 @@ function scrollToSection(id) {
     function animation(currentTime) {
       if (startTime === null) startTime = currentTime
       const timeElapsed = currentTime - startTime
-      const duration = 600 // duração mais rápida
+      const duration = 100 // duração mais rápida
       
       if (timeElapsed < duration) {
         const progress = timeElapsed / duration
