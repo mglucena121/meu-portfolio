@@ -14,11 +14,14 @@
 
           <!-- Container com scroll -->
           <div class="overflow-y-auto max-h-[85vh] custom-scrollbar">
-            <!-- Imagem do projeto: clicável para ampliar -->
-            <div class="w-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center cursor-zoom-in relative group" style="max-height: 45vh;" @click="toggleImagemAmpliada">
-              <img :src="projetoSelecionado.imagem" :alt="projetoSelecionado.titulo"
-                   class="max-h-[45vh] w-auto h-auto transition-transform duration-300"
-                   :class="modalImageFit === 'contain' ? 'object-contain' : 'object-cover'" />
+            <!-- Carrossel de imagens -->
+            <div class="relative w-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center cursor-zoom-in group" style="max-height: 45vh;" @click="toggleImagemAmpliada">
+              <!-- Imagem atual -->
+              <Transition name="fade" mode="out-in">
+                <img :key="imagemAtualIndex" :src="imagemAtual()" :alt="projetoSelecionado.titulo"
+                     class="max-h-[45vh] w-auto h-auto transition-transform duration-300"
+                     :class="modalImageFit === 'contain' ? 'object-contain' : 'object-cover'" />
+              </Transition>
               
               <!-- Ícone de zoom que aparece no hover -->
               <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20">
@@ -28,6 +31,39 @@
                   </svg>
                 </div>
               </div>
+
+              <!-- Botões de navegação (aparecem se tem múltiplas imagens) -->
+              <template v-if="temMultiplasImagens(projetoSelecionado)">
+                <!-- Botão anterior -->
+                <button @click.stop="imagemAnterior" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 dark:bg-gray-900/90 hover:bg-white dark:hover:bg-gray-900 shadow-lg transition-all hover:scale-110 z-10">
+                  <svg class="w-5 h-5 text-gray-700 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                  </svg>
+                </button>
+
+                <!-- Botão próximo -->
+                <button @click.stop="proximaImagem" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 dark:bg-gray-900/90 hover:bg-white dark:hover:bg-gray-900 shadow-lg transition-all hover:scale-110 z-10">
+                  <svg class="w-5 h-5 text-gray-700 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </button>
+
+                <!-- Indicadores de posição (dots) -->
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                  <button v-for="(img, index) in projetoSelecionado.imagem" :key="index"
+                          @click.stop="irParaImagem(index)"
+                          class="w-2 h-2 rounded-full transition-all duration-300"
+                          :class="index === imagemAtualIndex 
+                            ? 'bg-white w-6' 
+                            : 'bg-white/50 hover:bg-white/75'">
+                  </button>
+                </div>
+
+                <!-- Contador de imagens -->
+                <div class="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-black/60 text-white text-sm font-semibold">
+                  {{ imagemAtualIndex + 1 }} / {{ projetoSelecionado.imagem.length }}
+                </div>
+              </template>
             </div>
 
             <!-- Conteúdo separado -->
@@ -79,7 +115,7 @@
       </div>
     </Transition>
 
-    <!-- Lightbox para imagem ampliada -->
+    <!-- Lightbox para imagem ampliada (com navegação) -->
     <Transition name="lightbox">
       <div v-if="imagemAmpliada && projetoSelecionado" @click="toggleImagemAmpliada" class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm cursor-zoom-out">
         <button @click.stop="toggleImagemAmpliada" class="absolute top-4 right-4 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 shadow-lg transition-all hover:scale-110">
@@ -88,8 +124,25 @@
           </svg>
         </button>
         
-        <img @click.stop :src="projetoSelecionado.imagem" :alt="projetoSelecionado.titulo"
-             class="max-w-[95vw] max-h-[95vh] object-contain shadow-2xl" />
+        <!-- Navegação no lightbox -->
+        <template v-if="temMultiplasImagens(projetoSelecionado)">
+          <button @click.stop="imagemAnterior" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 shadow-lg transition-all hover:scale-110 z-20">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+
+          <button @click.stop="proximaImagem" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 shadow-lg transition-all hover:scale-110 z-20">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </template>
+        
+        <Transition name="fade" mode="out-in">
+          <img @click.stop :key="imagemAtualIndex" :src="imagemAtual()" :alt="projetoSelecionado.titulo"
+               class="max-w-[95vw] max-h-[95vh] object-contain shadow-2xl" />
+        </Transition>
       </div>
     </Transition>
 
@@ -122,15 +175,19 @@
           <div class="absolute inset-0 bg-white/85 dark:bg-gray-800/85 backdrop-blur-sm rounded-2xl border border-gray-200/60 dark:border-gray-700/50"></div>
 
           <div class="relative z-10 p-0 flex flex-col h-full">
-            <!-- Imagem centralizada e sem corte -->
+            <!-- Imagem do card (primeira imagem se for array) -->
             <div class="relative overflow-hidden rounded-t-2xl bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900" style="aspect-ratio: 16/9;">
-              <img
-                :src="projeto.imagem"
-                :alt="projeto.titulo"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
+              <img :src="primeiraImagem(projeto)" :alt="projeto.titulo"
+                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
 
-              <!-- Overlay neutro no hover -->
+              <!-- Badge de múltiplas imagens -->
+              <div v-if="temMultiplasImagens(projeto)" class="absolute top-3 right-3 px-2 py-1 rounded-full bg-black/60 text-white text-xs font-semibold flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                {{ projeto.imagem.length }}
+              </div>
+
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
 
@@ -190,17 +247,23 @@ const projetoSelecionado = ref(null)
 const modalAspectRatio = ref(null)
 const modalImageFit = ref('contain') // define se usa object-contain ou object-cover
 const imagemAmpliada = ref(false) // Controla o zoom da imagem
+const imagemAtualIndex = ref(0) // Índice da imagem atual no carrossel
+const autoPlayInterval = ref(null) // Intervalo para autoplay
 
 const abrirModal = (projeto) => {
   projetoSelecionado.value = projeto
   imagemAmpliada.value = false
+  imagemAtualIndex.value = 0 // Começa na primeira imagem
   document.body.style.overflow = 'hidden'
+  
+  // Inicia autoplay
+  iniciarAutoPlay()
 
   // Calcular o aspect ratio da imagem para evitar cortes (sem zoom)
   modalAspectRatio.value = null
   modalImageFit.value = 'contain'
   const img = new Image()
-  img.src = projeto.imagem
+  img.src = Array.isArray(projeto.imagem) ? projeto.imagem[0] : projeto.imagem
   img.onload = () => {
     // Define o aspect-ratio do container como Largura/Altura da imagem
     modalAspectRatio.value = `${img.naturalWidth} / ${img.naturalHeight}`
@@ -211,6 +274,8 @@ const abrirModal = (projeto) => {
 const fecharModal = () => {
   projetoSelecionado.value = null
   imagemAmpliada.value = false
+  imagemAtualIndex.value = 0
+  pararAutoPlay()
   document.body.style.overflow = ''
 }
 
@@ -218,10 +283,85 @@ const toggleImagemAmpliada = () => {
   imagemAmpliada.value = !imagemAmpliada.value
 }
 
+// Navegação do carrossel
+const proximaImagem = () => {
+  if (projetoSelecionado.value && Array.isArray(projetoSelecionado.value.imagem)) {
+    imagemAtualIndex.value = (imagemAtualIndex.value + 1) % projetoSelecionado.value.imagem.length
+    reiniciarAutoPlay()
+  }
+}
+
+const imagemAnterior = () => {
+  if (projetoSelecionado.value && Array.isArray(projetoSelecionado.value.imagem)) {
+    imagemAtualIndex.value = imagemAtualIndex.value === 0 
+      ? projetoSelecionado.value.imagem.length - 1 
+      : imagemAtualIndex.value - 1
+    reiniciarAutoPlay()
+  }
+}
+
+const irParaImagem = (index) => {
+  imagemAtualIndex.value = index
+  reiniciarAutoPlay()
+}
+
+// AutoPlay
+const iniciarAutoPlay = () => {
+  if (projetoSelecionado.value && Array.isArray(projetoSelecionado.value.imagem) && projetoSelecionado.value.imagem.length > 1) {
+    autoPlayInterval.value = setInterval(() => {
+      proximaImagem()
+    }, 4000) // Muda a cada 4 segundos
+  }
+}
+
+const pararAutoPlay = () => {
+  if (autoPlayInterval.value) {
+    clearInterval(autoPlayInterval.value)
+    autoPlayInterval.value = null
+  }
+}
+
+const reiniciarAutoPlay = () => {
+  pararAutoPlay()
+  iniciarAutoPlay()
+}
+
+// Obter imagem atual
+const imagemAtual = () => {
+  if (!projetoSelecionado.value) return ''
+  if (Array.isArray(projetoSelecionado.value.imagem)) {
+    return projetoSelecionado.value.imagem[imagemAtualIndex.value]
+  }
+  return projetoSelecionado.value.imagem
+}
+
+// Obter primeira imagem para o card
+const primeiraImagem = (projeto) => {
+  if (Array.isArray(projeto.imagem)) {
+    return projeto.imagem[0]
+  }
+  return projeto.imagem
+}
+
+// Verificar se tem múltiplas imagens
+const temMultiplasImagens = (projeto) => {
+  return Array.isArray(projeto.imagem) && projeto.imagem.length > 1
+}
+
 // Fechar modal com tecla ESC
 const handleKeydown = (e) => {
-  if (e.key === 'Escape' && projetoSelecionado.value) {
-    fecharModal()
+  if (projetoSelecionado.value) {
+    if (e.key === 'Escape') {
+      if (imagemAmpliada.value) {
+        imagemAmpliada.value = false
+      } else {
+        fecharModal()
+      }
+    } else if (e.key === 'ArrowRight') {
+      proximaImagem()
+    } else if (e.key === 'ArrowLeft') {
+      imagemAnterior()
+    }
   }
 }
 
@@ -246,7 +386,11 @@ const projetos = [
       'Sistema desenvolvido com foco em performance e experiência do usuário, incluindo filtros avançados de produtos, sistema de avaliações e controle de estoque em tempo real.',
       'Painel administrativo completo para gerenciamento de produtos, pedidos, clientes e relatórios de vendas.'
     ],
-    imagem: publicImage('projeto_m1.png'),
+    imagem: [
+      publicImage('projeto_m1.png'),
+      publicImage('projeto_m1.png'),
+      publicImage('projeto_m1.png'),
+    ],
     link: '#',
     github: '#',
     tecnologias: ['React', 'Node.js', 'MongoDB Atlas', "Express", "Tailwind CSS", "Swagger"]
@@ -398,6 +542,17 @@ function scrollToContact() {
 
 .cursor-zoom-out {
   cursor: zoom-out;
+}
+
+/* Animação de fade para transição de imagens */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 @keyframes fade-in {
