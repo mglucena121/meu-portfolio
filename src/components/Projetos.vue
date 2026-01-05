@@ -380,20 +380,18 @@ const publicImage = (file) => `${import.meta.env.BASE_URL}images/${file}`
 
 const projetos = [
   {
-    titulo: 'E-commerce Moderno',
+    titulo: 'Noticiário - M1',
     descricao: [
-      'Plataforma completa de e-commerce com carrinho de compras, sistema de pagamentos integrado e dashboard administrativo.',
-      'Sistema desenvolvido com foco em performance e experiência do usuário, incluindo filtros avançados de produtos, sistema de avaliações e controle de estoque em tempo real.',
-      'Painel administrativo completo para gerenciamento de produtos, pedidos, clientes e relatórios de vendas.'
+      'Portal de notícias digital desenvolvido como projeto pessoal, com foco em aprendizado prático e aplicação de tecnologias modernas. Possui front-end em React com Tailwind CSS, editor de textos integrado para criação de matérias, gerenciamento de imagens via Firebase Storage e back-end em Node.js com Express, autenticação JWT, documentação da API com Swagger e banco de dados MongoDB Atlas.'
     ],
     imagem: [
-      publicImage('projeto_m1.png'),
-      publicImage('projeto_m1.png'),
-      publicImage('projeto_m1.png'),
+      publicImage('criar_noticia_g1.png'),
+      publicImage('dashboard_g1.png'),
+      publicImage('noticia_g1.png'),
     ],
     link: '#',
-    github: '#',
-    tecnologias: ['React', 'Node.js', 'MongoDB Atlas', "Express", "Tailwind CSS", "Swagger"]
+    github: 'https://github.com/mglucena121/G1_clone',
+    tecnologias: ['React', 'Node.js', 'MongoDB Atlas', "Express", "Tailwind CSS", "Swagger", "Firebase"]
   },
   {
     titulo: 'Automação de json para excel',

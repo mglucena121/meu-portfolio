@@ -191,8 +191,8 @@ const sendEmail = async () => {
 
   try {
     // Configuração do FormSubmit
-    // IMPORTANTE: Substitua 'seu-email@gmail.com' pelo seu email real
-    const FORMSUBMIT_URL = 'https://formsubmit.co/netomario.121@gmail.com'
+    // Usar endpoint AJAX para receber JSON de status
+    const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/netomario.121@gmail.com'
     
     // Dados do formulário para envio
     const formData = new FormData()
@@ -210,7 +210,8 @@ const sendEmail = async () => {
     // Envio do email via FormSubmit
     const response = await fetch(FORMSUBMIT_URL, {
       method: 'POST',
-      body: formData
+      body: formData,
+      headers: { Accept: 'application/json' }
     })
 
     if (response.ok) {
