@@ -6,7 +6,7 @@
       <!-- Nome como título principal -->
       <div class="animate-fade-in mb-8">        
         <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-2 leading-tight tracking-tight">
-          Mário Gomes
+          {{ t('olaSouMario') }}
         </h1>
       </div>
 

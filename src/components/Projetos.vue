@@ -95,18 +95,18 @@
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
-                  Ver no GitHub
+                  {{ t('verGithub') }}
                 </a>
                 <a v-if="projetoSelecionado.link && projetoSelecionado.link !== '#'" :href="projetoSelecionado.link" target="_blank"
                    class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all hover:shadow-lg hover:-translate-y-0.5">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
                   </svg>
-                  Ver Demo ao Vivo
+                  {{ t('verDemo') }}
                 </a>
                 <button @click="fecharModal"
                    class="sm:w-auto px-6 py-3.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-all">
-                  Fechar
+                  {{ t('fechar') }}
                 </button>
               </div>
             </div>
@@ -225,6 +225,7 @@
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
+                  {{ t('verGithub') }}
                 </a>
               </div>
             </div>
@@ -236,11 +237,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useLanguage } from '../composables/useLanguage'
 import { useScrollAnimation } from '../composables/useScrollAnimation'
 
-const { t } = useLanguage()
+const { t, lang } = useLanguage()
 const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.1 })
 
 const projetoSelecionado = ref(null)
@@ -378,46 +379,31 @@ onUnmounted(() => {
 // Helper para montar URL de imagens em public/images respeitando BASE_URL
 const publicImage = (file) => `${import.meta.env.BASE_URL}images/${file}`
 
-const projetos = [
-  {
-    titulo: 'Noticiário - M1',
-    descricao: [
-      'Portal de notícias digital desenvolvido como projeto pessoal, com foco em aprendizado prático e aplicação de tecnologias modernas. Possui front-end em React com Tailwind CSS, editor de textos integrado para criação de matérias, gerenciamento de imagens via Firebase Storage e back-end em Node.js com Express, autenticação JWT, documentação da API com Swagger e banco de dados MongoDB Atlas.'
-    ],
-    imagem: [
-      publicImage('criar_noticia_g1.png'),
-      publicImage('dashboard_g1.png'),
-      publicImage('noticia_g1.png'),
-    ],
-    link: '#',
-    github: 'https://github.com/mglucena121/G1_clone',
-    tecnologias: ['React', 'Node.js', 'MongoDB Atlas', "Express", "Tailwind CSS", "Swagger", "Firebase"]
-  },
-  {
-    titulo: 'Automação de json para excel',
-    descricao: [
-      'A aplicação permite ao usuário informar a URL de uma API REST que retorna dados em formato JSON e escolher o local onde o arquivo Excel será salvo.',
-      'A partir disso, o sistema realiza o consumo dos dados via requisição HTTP do tipo GET, processa e normaliza as informações recebidas e converte automaticamente os dados para uma planilha Excel (.xlsx).',
-      'Durante todo o processo, a interface exibe uma barra de progresso com feedback em tempo real, garantindo uma melhor experiência ao usuário.'
-    ],
-    imagem: publicImage('Captura de tela 2025-12-29 145009.png'),
-    link: '#',
-    github: '#',
-    tecnologias: ['Python', 'PySide 6', 'API REST', 'Pandas']
-  },
-  // {
-  //   titulo: 'App Mobile Fitness',
-  //   descricao: [
-  //     'Aplicativo mobile para acompanhamento de exercícios e metas de saúde com sincronização em tempo real na nuvem.',
-  //     'Inclui recursos de rastreamento de atividades, definição de metas personalizadas, gráficos de progresso e integração com dispositivos wearables.',
-  //     'Sistema de notificações para lembrar usuários de seus treinos e celebrar conquistas alcançadas.'
-  //   ],
-  //   imagem: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
-  //   link: '#',
-  //   github: '#',
-  //   tecnologias: ['React Native', 'Firebase', 'TypeScript']
-  // },
-]
+const projetos = computed(() => {
+  lang.value // reactive
+  return [
+    {
+      titulo: t('proj1Titulo'),
+      descricao: [t('proj1Desc1')],
+      imagem: [
+        publicImage('criar_noticia_g1.png'),
+        publicImage('dashboard_g1.png'),
+        publicImage('noticia_g1.png'),
+      ],
+      link: '#',
+      github: 'https://github.com/mglucena121/G1_clone',
+      tecnologias: ['React', 'Node.js', 'MongoDB Atlas', 'Express', 'Tailwind CSS', 'Swagger', 'Firebase']
+    },
+    {
+      titulo: t('proj2Titulo'),
+      descricao: [t('proj2Desc1'), t('proj2Desc2'), t('proj2Desc3')],
+      imagem: publicImage('Captura de tela 2025-12-29 145009.png'),
+      link: '#',
+      github: '#',
+      tecnologias: ['Python', 'PySide 6', 'API REST', 'Pandas']
+    },
+  ]
+})
 
 // Badges neutros; mapeamento de cores removido
 

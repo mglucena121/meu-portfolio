@@ -17,7 +17,7 @@
         <!-- Informações de contato -->
         <div class="animate-fade-in delay-200">
           <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 dark:border-gray-700/50">
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Informações de contato</h3>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ t('contactInfo') }}</h3>
             
             <div class="space-y-6">
               <!-- Email -->
@@ -28,7 +28,7 @@
                   </svg>
                 </div>
                 <div>
-                  <p class="font-semibold text-gray-900 dark:text-white">Email</p>
+                  <p class="font-semibold text-gray-900 dark:text-white">{{ t('emailTitle') }}</p>
                   <a href="mailto:netomario.121@gmail.com" class="text-blue-600 dark:text-blue-400 hover:underline">
                     netomario.121@gmail.com
                   </a>
@@ -43,7 +43,7 @@
                   </svg>
                 </div>
                 <div>
-                  <p class="font-semibold text-gray-900 dark:text-white">LinkedIn</p>
+                  <p class="font-semibold text-gray-900 dark:text-white">{{ t('linkedinTitle') }}</p>
                   <a href="https://www.linkedin.com/in/m%C3%A1rio-gomes-7b59b71b9/" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">
                     Mário Gomes
                   </a>
@@ -58,7 +58,7 @@
                   </svg>
                 </div>
                 <div>
-                  <p class="font-semibold text-gray-900 dark:text-white">GitHub</p>
+                  <p class="font-semibold text-gray-900 dark:text-white">{{ t('githubTitle') }}</p>
                   <a href="https://github.com/mglucena121" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">
                     @mglucena121
                   </a>
@@ -78,7 +78,7 @@
         <!-- Formulário de contato -->
         <div class="animate-fade-in delay-400">
           <div class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-white/20 dark:border-gray-700/50">
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Envie uma mensagem</h3>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ t('sendMessage') }}</h3>
             
             <!-- Mensagem de sucesso -->
             <div v-if="showSuccess" class="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl">
@@ -86,7 +86,7 @@
                 <svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                 </svg>
-                <p class="text-green-700 dark:text-green-300 font-medium">Mensagem enviada com sucesso! Obrigado pelo contato.</p>
+                <p class="text-green-700 dark:text-green-300 font-medium">{{ t('successMsg') }}</p>
               </div>
             </div>
 
@@ -96,51 +96,51 @@
                 <svg class="w-5 h-5 text-red-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
-                <p class="text-red-700 dark:text-red-300 font-medium">Erro ao enviar mensagem. Tente novamente.</p>
+                <p class="text-red-700 dark:text-red-300 font-medium">{{ t('errorMsg') }}</p>
               </div>
             </div>
 
             <form @submit.prevent="sendEmail" class="space-y-6">
               <div>
-                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Nome *</label>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ t('nameLabel') }} *</label>
                 <input 
                   v-model="form.name"
                   type="text" 
                   required
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-200 dark:border-gray-600 transition-all duration-200"
-                  placeholder="Seu nome completo"
+                  :placeholder="t('namePh')"
                 />
               </div>
 
               <div>
-                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Email *</label>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ t('emailLabel') }} *</label>
                 <input 
                   v-model="form.email"
                   type="email" 
                   required
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-200 dark:border-gray-600 transition-all duration-200"
-                  placeholder="seu@email.com"
+                  :placeholder="t('emailPh')"
                 />
               </div>
 
               <div>
-                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Assunto</label>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ t('subjectLabel') }}</label>
                 <input 
                   v-model="form.subject"
                   type="text"
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-200 dark:border-gray-600 transition-all duration-200"
-                  placeholder="Sobre o que você gostaria de falar?"
+                  :placeholder="t('subjectPh')"
                 />
               </div>
 
               <div>
-                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Mensagem *</label>
+                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ t('messageLabel') }} *</label>
                 <textarea 
                   v-model="form.message"
                   rows="5" 
                   required
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-200 dark:border-gray-600 transition-all duration-200 resize-none"
-                  placeholder="Descreva seu projeto, ideia ou como posso ajudá-lo..."
+                  :placeholder="t('messagePh')"
                 ></textarea>
               </div>
 
@@ -153,8 +153,8 @@
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span v-if="!isLoading">Enviar Mensagem</span>
-                <span v-else>Enviando...</span>
+                <span v-if="!isLoading">{{ t('sendBtn') }}</span>
+                <span v-else>{{ t('sendingBtn') }}</span>
               </button>
             </form>
           </div>
@@ -198,11 +198,11 @@ const sendEmail = async () => {
     const formData = new FormData()
     formData.append('name', form.name)
     formData.append('email', form.email)
-    formData.append('subject', form.subject || 'Contato do Portfolio')
+    formData.append('subject', form.subject || t('contactSubjectFallback'))
     formData.append('message', form.message)
     
     // Configurações extras do FormSubmit
-    formData.append('_subject', `Portfolio - ${form.subject || 'Nova mensagem'}`)
+    formData.append('_subject', `${t('contactSubjectPrefix')} ${form.subject || t('contactSubjectFallback')}`)
     formData.append('_template', 'table') // Template de email mais bonito
     formData.append('_captcha', 'false') // Desabilita captcha
     formData.append('_next', window.location.href) // Redirect após envio (opcional)

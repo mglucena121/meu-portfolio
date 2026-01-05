@@ -79,7 +79,7 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useLanguage } from '../composables/useLanguage'
 
-const { lang, t, toggleLanguage } = useLanguage()
+const { lang, t, toggleLanguage, setLanguage } = useLanguage()
 
 const navItems = computed(() => [
   { id: 'inicio', label: t('inicio'), href: '#inicio' },
@@ -154,10 +154,8 @@ function onScroll() {
 onMounted(() => {
   // Dark mode sempre ativo
   document.documentElement.classList.add('dark')
-  // Carrega idioma salvo ou usa português como padrão
-  const savedLang = localStorage.getItem('language') || 'en'
-  // Atualizar o lang através do composable seria via ref, mas como estamos usando computed, vamos forçar aqui
-  window.dispatchEvent(new CustomEvent('setLanguage', { detail: { lang: savedLang } }))
+  // Sempre iniciar em português
+  setLanguage('pt')
   window.addEventListener('scroll', onScroll)
 })
 onUnmounted(() => {

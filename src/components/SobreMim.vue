@@ -24,13 +24,13 @@
             <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4">{{ t('sobreTexto') }}</h3>
             <div class="space-y-4 text-base md:text-lg">
               <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                {{ t('sobreDescricao') }}
+                {{ t('sobreDescricao1') }}
               </p>
               <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                Tenho experiência com <span class="font-semibold text-gray-800 dark:text-gray-200">Vue.js, React, Node.js, integrações de APIs, LoopBack, Express, MongoDB, Tailwind CSS</span> desenvolvendo e dando manutenção em sistemas web.
+                {{ t('sobreDescricao2') }}
               </p>
               <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-                Meu objetivo é criar soluções que otimizem processos, aumentem a produtividade e gerem resultados reais para empresas e pessoas, enquanto sigo evoluindo profissionalmente através de novos desafios.
+                {{ t('sobreDescricao3') }}
               </p>
             </div>
           </div>
@@ -64,7 +64,7 @@
         <!-- Card de Educação -->
         <div class="animate-fade-in delay-400">
           <div class="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200/50 dark:border-gray-700/30 hover:shadow-xl transition-all duration-300">
-            <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-6">Educação</h3>
+            <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-6">{{ t('educacaoTitulo') }}</h3>
             <div class="space-y-6 md:space-y-8">
               <div v-for="edu in educacao" :key="edu.id"
                 class="border-l-4 border-slate-500/60 pl-4 md:pl-6"
@@ -100,70 +100,71 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useLanguage } from '../composables/useLanguage'
 import { useScrollAnimation } from '../composables/useScrollAnimation'
 
-const { t } = useLanguage()
+const { t, lang } = useLanguage()
 const { elementRef, isVisible } = useScrollAnimation({ threshold: 0.15 })
 
-// Util para calcular duração em anos e meses (pt-BR)
 const formatDuration = (inicio, fim) => {
   const parseYm = (s) => {
     if (!s) return null
-    const parts = s.split('-')
-    const y = Number(parts[0])
-    const m = Number(parts[1]) - 1
-    return new Date(y, m, 1)
+    const [y, m] = s.split('-').map(Number)
+    return new Date(y, m - 1, 1)
   }
   const start = typeof inicio === 'string' ? parseYm(inicio) : inicio
-  const endRaw = typeof fim === 'string' ? parseYm(fim) : fim
-  const now = new Date()
-  const end = endRaw || new Date(now.getFullYear(), now.getMonth(), 1)
+  const end = typeof fim === 'string' ? parseYm(fim) : fim || new Date()
   if (!start || !end) return '—'
   let months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth())
   if (months < 0) months = 0
-  const anos = Math.floor(months / 12)
-  const meses = months % 12
-  const pAno = anos === 1 ? 'ano' : 'anos'
-  const pMes = meses === 1 ? 'mês' : 'meses'
-  if (anos > 0 && meses > 0) return `${anos} ${pAno} e ${meses} ${pMes}`
-  if (anos > 0) return `${anos} ${pAno}`
-  if (meses > 0) return `${meses} ${pMes}`
-  return 'menos de 1 mês'
+  const years = Math.floor(months / 12)
+  const rem = months % 12
+  const isEn = lang.value === 'en'
+  const yLabel = years === 1 ? (isEn ? 'year' : 'ano') : (isEn ? 'years' : 'anos')
+  const mLabel = rem === 1 ? (isEn ? 'month' : 'mês') : (isEn ? 'months' : 'meses')
+  if (years > 0 && rem > 0) return `${years} ${yLabel} ${isEn ? 'and' : 'e'} ${rem} ${mLabel}`
+  if (years > 0) return `${years} ${yLabel}`
+  if (rem > 0) return `${rem} ${mLabel}`
+  return isEn ? 'less than 1 month' : 'menos de 1 mês'
 }
 
-const experiencias = [
-  {
-    id: 1,
-    cargo: 'Desenvolvedor Júnior | Suporte Técnico manipulação de dados em banco',
-    empresa: 'Intelite Tecnologia',
-    periodo: 'Fev 2024 - Atual',
-    inicio: '2024-02',
-    fim: null,
-    descricao: 'Atuo como desenvolvedor full stack com foco em aplicações web modernas, utilizando Vue.js no front-end, LoopBack e node no back-end. Também sou responsável por dar suporte técnico aos clientes e realizar manutenções e alterações no banco de dados. Trabalho com tecnologias como VUE, REACT, TAILWIND, HTML5, CSS3, JAVASCRIPT, NODEJS, APIs REST e MongoDB, conciliando desenvolvimento com atendimento técnico eficiente.'
-  },
-  {
-    id: 2,
-    cargo: 'Suporte Técnico',
-    empresa: 'Intelite Tecnologia',
-    periodo: 'Ago 2022 - Fev 2024',
-    inicio: '2022-08',
-    fim: '2024-02',
-    descricao: 'Suporte técnico de um software de autoatendimento utilizado por empresas em todo o Brasil. Sou responsável pela instalação, manutenção e otimização do sistema em dispositivos Android TV Box, além da configuração de roteadores para garantir conectividade estável e eficiente.'
-  }
-]
+const experiencias = computed(() => {
+  lang.value // dependência reativa
+  return [
+    {
+      id: 1,
+      cargo: t('exp1Cargo'),
+      empresa: t('exp1Empresa'),
+      periodo: t('exp1Periodo'),
+      inicio: '2024-02',
+      fim: null,
+      descricao: t('exp1Desc')
+    },
+    {
+      id: 2,
+      cargo: t('exp2Cargo'),
+      empresa: t('exp2Empresa'),
+      periodo: t('exp2Periodo'),
+      inicio: '2022-08',
+      fim: '2024-02',
+      descricao: t('exp2Desc')
+    }
+  ]
+})
 
-const educacao = [
-  {
-    id: 1,
-    curso: 'Sistemas Para Internet (SPI)',
-    instituicao: 'Centro Universitário de João Pessoa (UNIPÊ)',
-    periodo: '2022 - 2024',
-    descricao: [
-      'Formação completa em Sistemas para Internet com foco em desenvolvimento de software e aplicações web modernas.'
-    ]
-  }
-]
+const educacao = computed(() => {
+  lang.value // dependência reativa
+  return [
+    {
+      id: 1,
+      curso: t('edu1Curso'),
+      instituicao: t('edu1Instituicao'),
+      periodo: t('edu1Periodo'),
+      descricao: [t('edu1Desc1')]
+    }
+  ]
+})
 </script>
 
 <style scoped>
