@@ -16,7 +16,7 @@ export const useLanguage = () => {
       
       // Inicio
       olaSouMario: 'Mário Gomes',
-      desenvolvedorFullStack: 'Desenvolvedor Web full stack',
+      desenvolvedorFullStack: 'Desenvolvedor Web Full Stack',
       graduadoSistemas: 'Graduado em sistemas para Internet.',
       verProjetos: 'Ver Projetos',
       entrarEmContato: 'Entrar em Contato',
@@ -49,7 +49,7 @@ export const useLanguage = () => {
       backend: 'Backend Development',
       ferramentas: 'Ferramentas',
       sempreAprendendo: 'Sempre Aprendendo',
-      sempreAprendendoDesc: 'Evoluindo continuamente com boas práticas e novas ferramentas.',
+      sempreAprendendoDesc: 'Evoluindo continuamente com boas práticas e novas tecnologias.',
       
       // Experiencias
       minhasExperiencias: 'Experiências',
@@ -138,7 +138,7 @@ export const useLanguage = () => {
       backend: 'Backend Development',
       ferramentas: 'Tools',
       sempreAprendendo: 'Always Learning',
-      sempreAprendendoDesc: 'Continuously evolving with best practices and new tools.',
+      sempreAprendendoDesc: 'Continuously evolving with best practices and new technologies.',
       
       // Experiencias
       minhasExperiencias: 'Experience',
