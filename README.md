@@ -42,7 +42,7 @@ O projeto demonstra boas práticas, organização de código, design moderno e f
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/nome-do-repositorio.git
+git clone https://github.com/mglucena121/meu-portfolio.git
 
 # Acesse a pasta do projeto
 cd meu-portifolio
