@@ -15,11 +15,11 @@
           <!-- Container com scroll -->
           <div class="overflow-y-auto max-h-[85vh] custom-scrollbar">
             <!-- Carrossel de imagens -->
-            <div class="relative w-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center cursor-zoom-in group" style="max-height: 45vh;" @click="toggleImagemAmpliada">
+            <div class="relative w-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center cursor-zoom-in group modal-img-wrapper" @click="toggleImagemAmpliada">
               <!-- Imagem atual -->
               <Transition name="fade" mode="out-in">
                 <img :key="imagemAtualIndex" :src="imagemAtual()" :alt="projetoSelecionado.titulo"
-                     class="max-h-[45vh] w-auto h-auto transition-transform duration-300"
+                     class="modal-img transition-transform duration-300"
                      :class="modalImageFit === 'contain' ? 'object-contain' : 'object-cover'" />
               </Transition>
               
@@ -603,5 +603,16 @@ section .animate-section-content {
 section.animate-section-visible .animate-section-content {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Modal carousel sizing to avoid jumps */
+.modal-img-wrapper {
+  height: clamp(260px, 45vh, 520px);
+}
+
+.modal-img-wrapper .modal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 </style> 
