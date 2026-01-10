@@ -96,13 +96,11 @@ const scrolled = ref(false)
 function scrollToSection(id) {
   const el = document.getElementById(id)
   if (el) {
-    // Função de scroll suave personalizada
     const targetPosition = el.getBoundingClientRect().top + window.pageYOffset - 80 // -80 para compensar a navbar fixa
     const startPosition = window.pageYOffset
     const distance = targetPosition - startPosition
     let startTime = null
 
-    // Função de easing personalizada (ease-in-out)
     function easeInOutCubic(t) {
       return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
     }
@@ -110,7 +108,7 @@ function scrollToSection(id) {
     function animation(currentTime) {
       if (startTime === null) startTime = currentTime
       const timeElapsed = currentTime - startTime
-      const duration = 100 // duração mais rápida
+      const duration = 800 // duração mais suave (ms)
       
       if (timeElapsed < duration) {
         const progress = timeElapsed / duration
